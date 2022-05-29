@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>modelo 3d</title>
+    <style>
+        body {
+            margin:0;
+            text-align: center;
+            background-color: rgb(91, 117, 230);
+        }
+        canvas {
+            display: block;
+        }
+        section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 5px 5px 10px black;
+            font: normal 20px arial;
+        }
+        p#roberto{
+            color: purple;
+            
+        } p#maeda {
+            color: red;
+        } p#lucas {
+            color: orange;
+        } p#derick {
+            color: yellow;
+        }
+        p#dudu {
+            color: brown;
+        }
+        
+
+    </style>
+</head>
+<a href="index.html"><button>Voltar</button</a>
+<body>
+    <script src="three.js"></script>
+    <script type="module" src="GLTFLoader.js"></script>
+    <script type="module" src="TrackballControls.js"></script>
+    <script type="module">
+        import {GLTFLoader} from "./GLTFLoader.js"
+        import {OrbitControls} from "./OrbitControls.js" 
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        document.body.appendChild(renderer.domElement)
+
+        var obj;
+        var loader = new GLTFLoader();
+        loader.load("scene.glb", function(gltf){
+            obj = gltf.scene;
+            scene.add(gltf.scene);
+            obj.position.z = 0.3;
+            obj.position.x = 0.5;
+            obj.position.y = -0.2;
+        }) 
+        
+        camera.position.set( 1, 0.5, 0.7 );
+
+
+        
+        const controls = new OrbitControls(camera, renderer.domElement);
+        
+
+        //scene.background = new THREE.Color(0xffffff)
+        var light = new THREE.HemisphereLight(0xffffff, 0x000000,2);
+        scene.add(light);
+        
+        function animate() {
+            requestAnimationFrame(animate)
+            controls.update();
+            renderer.render(scene,camera);
+        }
+        animate();
+    </script>
+</body>
+<section>
+    <h2>Legenda do modelo 3d</h1>
+        
+            Seta: Direção <br>
+            <p id="roberto">Roxo: Cadeias Montanhosas</p> <br>
+             Preto: Placas Tectonicas <br>
+            <h3>No Buraco: </h2><br> 
+             <p id="maeda">Vermelho: Manto</p> <br>
+            <p id="lucas">Laranja: Nucleo Externo</p>  <br>
+            <p id="derick">Amarelo: Nucleo Interno</p>  <br>
+             <p id="dudu">Marrom: Crosta</p>
+
+
+</section>
+    
+
+</html>
